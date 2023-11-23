@@ -5,6 +5,7 @@ library(shiny)
 library(datasets)
 library(digest)
 library(shinythemes)
+library(shinycssloaders)
 
 # Define UI for application
 
@@ -21,18 +22,8 @@ ui <- fluidPage(
     
     tabPanel(
       "Start here (raw data)", 
-      # sliderInput(
-      #   "Time",
-      #   "Window of relevant time:",
-      #   min = 0,
-      #   max = 24,
-      #   value = c(0, 24)),
-      # 
-      # h3("Good Practices"),
-      # strong("Boldly go somewhere"),
-      # plotOutput("FirstPlot")
-      
-      ),
+      withSpinner(
+        htmlOutput("skimmer"))),
     
     # results panel ------------------------------------------------------------
     

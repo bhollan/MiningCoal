@@ -8,20 +8,20 @@ library(skimr)
 
 # Define server logic required
 
+skim_html <-
+  read_file('skim_workaround.html')
+
+coal <-
+  read_rds('data/raw_coal_data.rds')
+
 server <- function(input, output) {
   
-  # starter functions ----------------------------------------------------------
+  # starterPanel data ----------------------------------------------------------
   
-  output$FirstPlot <- renderPlot({
-    datasets::ChickWeight %>%
-      filter(Time > input$Time[1],
-             Time < input$Time[2]) %>%
-      group_by(Time) %>%
-      ggplot() + 
-      geom_point(aes(x = Time, y = weight))
-  })
+  output$skimmer <- 
+    renderText({ skim_html })
   
-  # results functions ----------------------------------------------------------
+  # resultsPanel data ----------------------------------------------------------
   
   output$SecondPlot <- renderPlot({
     datasets::ChickWeight %>%
@@ -31,7 +31,7 @@ server <- function(input, output) {
       geom_point(aes(x = Diet, y = weight))
   })
   
-  # explorer functions ---------------------------------------------------------
+  # explorerPanel data ---------------------------------------------------------
   output$shaOutput <- renderText(digest(input$HashInputText, "sha256"))
 }
 

@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>skim_workaround</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="skim_workaround_files/libs/clipboard/clipboard.min.js"></script>
+<script src="skim_workaround_files/libs/quarto-html/quarto.js"></script>
+<script src="skim_workaround_files/libs/quarto-html/popper.min.js"></script>
+<script src="skim_workaround_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="skim_workaround_files/libs/quarto-html/anchor.min.js"></script>
+<link href="skim_workaround_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="skim_workaround_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="skim_workaround_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="skim_workaround_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="skim_workaround_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">coal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">231866</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 11%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CONTROLLER_ID</td>
+<td style="text-align: right;">702</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5690</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CONTROLLER_NAME</td>
+<td style="text-align: right;">702</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5692</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OPERATOR_ID</td>
+<td style="text-align: right;">702</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7200</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OPERATOR_NAME</td>
+<td style="text-align: right;">702</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8914</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CONTRACTOR_ID</td>
+<td style="text-align: right;">208186</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4363</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SUBUNIT</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DEGREE_INJURY_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DEGREE_INJURY</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UG_LOCATION_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UG_LOCATION</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UG_MINING_METHOD_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UG_MINING_METHOD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MINING_EQUIP_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MINING_EQUIP</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EQUIP_MFR_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">239</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EQUIP_MFR_NAME</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EQUIP_MODEL_NO</td>
+<td style="text-align: right;">133087</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17062</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLASSIFICATION_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLASSIFICATION</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ACCIDENT_TYPE_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ACCIDENT_TYPE</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OCCUPATION_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">251</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OCCUPATION</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ACTIVITY_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ACTIVITY</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">INJURY_SOURCE_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">INJURY_SOURCE</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NATURE_INJURY_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NATURE_INJURY</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">INJ_BODY_PART_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">INJ_BODY_PART</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRANS_TERM</td>
+<td style="text-align: right;">32067</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IMMED_NOTIFY_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IMMED_NOTIFY</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NARRATIVE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">610</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">230547</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">COAL_METAL_IND</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ACC_ID</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.159335e+05</td>
+<td style="text-align: right;">6.693409e+04</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">5.796725e+04</td>
+<td style="text-align: right;">1.159335e+05</td>
+<td style="text-align: right;">1.738998e+05</td>
+<td style="text-align: right;">231866</td>
+<td style="text-align: left;">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MINE_ID</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.697631e+06</td>
+<td style="text-align: right;">1.583587e+06</td>
+<td style="text-align: right;">1.000030e+05</td>
+<td style="text-align: right;">1.300122e+06</td>
+<td style="text-align: right;">2.700360e+06</td>
+<td style="text-align: right;">4.402828e+06</td>
+<td style="text-align: right;">6900001</td>
+<td style="text-align: left;">▇▇▆▇▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DOCUMENT_NO</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.200779e+11</td>
+<td style="text-align: right;">5.368435e+07</td>
+<td style="text-align: right;">2.200000e+11</td>
+<td style="text-align: right;">2.200316e+11</td>
+<td style="text-align: right;">2.200716e+11</td>
+<td style="text-align: right;">2.201212e+11</td>
+<td style="text-align: right;">220191500041</td>
+<td style="text-align: left;">▇▇▆▅▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SUBUNIT_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">9.430000e+00</td>
+<td style="text-align: right;">1.385000e+01</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">3.000000e+01</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAL_YR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.007550e+03</td>
+<td style="text-align: right;">5.370000e+00</td>
+<td style="text-align: right;">2.000000e+03</td>
+<td style="text-align: right;">2.003000e+03</td>
+<td style="text-align: right;">2.007000e+03</td>
+<td style="text-align: right;">2.012000e+03</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">▇▇▆▅▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CAL_QTR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.460000e+00</td>
+<td style="text-align: right;">1.090000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▇▇▁▇▆</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FISCAL_YR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.007770e+03</td>
+<td style="text-align: right;">5.380000e+00</td>
+<td style="text-align: right;">2.000000e+03</td>
+<td style="text-align: right;">2.003000e+03</td>
+<td style="text-align: right;">2.007000e+03</td>
+<td style="text-align: right;">2.012000e+03</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">▇▇▆▅▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FISCAL_QTR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.580000e+00</td>
+<td style="text-align: right;">1.110000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">4.000000e+00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▆▇▁▇▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ACCIDENT_TIME</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.885060e+03</td>
+<td style="text-align: right;">2.422910e+03</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">8.450000e+02</td>
+<td style="text-align: right;">1.225000e+03</td>
+<td style="text-align: right;">1.730000e+03</td>
+<td style="text-align: right;">9999</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no_inj</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3.800000e-01</td>
+<td style="text-align: right;">4.900000e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mod_inj</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4.000000e-01</td>
+<td style="text-align: right;">4.900000e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FIPS_STATE_CD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3.256000e+01</td>
+<td style="text-align: right;">1.756000e+01</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.800000e+01</td>
+<td style="text-align: right;">3.200000e+01</td>
+<td style="text-align: right;">5.000000e+01</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: left;">▅▇▆▇▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SHIFT_BEGIN_TIME</td>
+<td style="text-align: right;">990</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.353320e+03</td>
+<td style="text-align: right;">1.745090e+03</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">6.300000e+02</td>
+<td style="text-align: right;">7.000000e+02</td>
+<td style="text-align: right;">1.530000e+03</td>
+<td style="text-align: right;">9999</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NO_INJURIES</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">9.100000e-01</td>
+<td style="text-align: right;">6.200000e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOT_EXPER</td>
+<td style="text-align: right;">40315</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">1.129000e+01</td>
+<td style="text-align: right;">1.102000e+01</td>
+<td style="text-align: right;">1.000000e-02</td>
+<td style="text-align: right;">2.000000e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">1.931000e+01</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: left;">▇▂▂▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MINE_EXPER</td>
+<td style="text-align: right;">37332</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">6.610000e+00</td>
+<td style="text-align: right;">8.770000e+00</td>
+<td style="text-align: right;">1.000000e-02</td>
+<td style="text-align: right;">6.900000e-01</td>
+<td style="text-align: right;">2.880000e+00</td>
+<td style="text-align: right;">8.770000e+00</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JOB_EXPER</td>
+<td style="text-align: right;">36624</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">7.020000e+00</td>
+<td style="text-align: right;">8.520000e+00</td>
+<td style="text-align: right;">1.000000e-02</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">3.380000e+00</td>
+<td style="text-align: right;">1.000000e+01</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SCHEDULE_CHARGE</td>
+<td style="text-align: right;">65018</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">7.013000e+01</td>
+<td style="text-align: right;">6.249100e+02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">6000</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DAYS_RESTRICT</td>
+<td style="text-align: right;">57577</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">8.340000e+00</td>
+<td style="text-align: right;">2.713000e+01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.000000e+00</td>
+<td style="text-align: right;">2896</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DAYS_LOST</td>
+<td style="text-align: right;">42393</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">2.645000e+01</td>
+<td style="text-align: right;">6.040000e+01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.100000e+01</td>
+<td style="text-align: right;">2470</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLOSED_DOC_NO</td>
+<td style="text-align: right;">131520</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">3.200714e+11</td>
+<td style="text-align: right;">1.062658e+09</td>
+<td style="text-align: right;">3.200414e+10</td>
+<td style="text-align: right;">3.200233e+11</td>
+<td style="text-align: right;">3.200711e+11</td>
+<td style="text-align: right;">3.201225e+11</td>
+<td style="text-align: right;">320191500010</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Days_total</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">7.208000e+01</td>
+<td style="text-align: right;">5.323400e+02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.400000e+01</td>
+<td style="text-align: right;">6290</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tot_days_noillness</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">7.043000e+01</td>
+<td style="text-align: right;">5.312400e+02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.200000e+01</td>
+<td style="text-align: right;">6290</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">acc_cat_num</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3.180000e+00</td>
+<td style="text-align: right;">2.210000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">4.000000e+00</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">▇▂▅▁▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">acc_class_num</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4.770000e+00</td>
+<td style="text-align: right;">2.310000e+00</td>
+<td style="text-align: right;">1.000000e+00</td>
+<td style="text-align: right;">3.000000e+00</td>
+<td style="text-align: right;">4.000000e+00</td>
+<td style="text-align: right;">7.000000e+00</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">▇▃▆▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tot_mech</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tot_ind</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tot_org</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tot_rc</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">8.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tot_management</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tot_lack_pol</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tot_enf_pol</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">2.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tot_external</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3.000000e-02</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">num_investigators</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.300000e-01</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">min</th>
+<th style="text-align: left;">max</th>
+<th style="text-align: left;">median</th>
+<th style="text-align: right;">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ACCIDENT_DT</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">2000-01-01</td>
+<td style="text-align: left;">2019-05-28</td>
+<td style="text-align: left;">2007-05-16</td>
+<td style="text-align: right;">7083</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RETURN_TO_WORK_DT</td>
+<td style="text-align: right;">38270</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: left;">1991-06-01</td>
+<td style="text-align: left;">2019-05-29</td>
+<td style="text-align: left;">2007-07-20</td>
+<td style="text-align: right;">7075</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">INVEST_BEGIN_DT</td>
+<td style="text-align: right;">181783</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: left;">2000-01-01</td>
+<td style="text-align: left;">2019-05-27</td>
+<td style="text-align: left;">2005-11-10</td>
+<td style="text-align: right;">6662</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

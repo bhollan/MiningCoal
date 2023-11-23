@@ -1,0 +1,11 @@
+```{r include = FALSE, echo = FALSE, output = FALSE, warning = FALSE}
+library(tidyverse)
+library(skimr)
+```
+
+```{r echo = FALSE, output = TRUE}
+
+coal <- read_rds('data/raw_coal_data.rds')
+
+skim(coal)
+```
