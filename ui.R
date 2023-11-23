@@ -29,15 +29,18 @@ ui <- fluidPage(
     
     tabPanel(
       "What I found (results)",
-      checkboxGroupInput(
-        "Diet",
-        "Diets of Chicks for plotting",
-        choices  = c("1", "2", "3", "4"),
-        selected = c("1", "2", "3", "4")),
-      
-      h3("Bad Practices"),
-      strong("Boldly go nowhere"),
-      plotOutput("SecondPlot")),
+      # checkboxGroupInput(
+      #   "Diet",
+      #   "Diets of Chicks for plotting",
+      #   choices  = c("1", "2", "3", "4"),
+      #   selected = c("1", "2", "3", "4"),
+      #   inline = TRUE),
+      # 
+      # h3("Bad Practices"),
+      # strong("Boldly go nowhere"),
+      # plotOutput("SecondPlot")
+      withSpinner(
+        htmlOutput("analysis"))),
     
     # explore panel ------------------------------------------------------------
     

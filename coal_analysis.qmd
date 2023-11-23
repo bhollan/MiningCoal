@@ -1,0 +1,62 @@
+```{r include = FALSE, echo = FALSE, output = FALSE, warning = FALSE}
+library(skimr)
+library(kableExtra)
+library(tidyverse)
+library(tidycensus)
+```
+
+```{r echo = FALSE, output = TRUE}
+
+coal <-
+  read_rds('data/raw_coal_data.rds')
+
+# skim(coal)
+
+fips <-
+  tidycensus::fips_codes %>%
+  select(
+    state,
+    state_code,
+    state_name) %>%
+  summarise(.by = state)
+```
+
+So we've got this huge dataset of 220k coal mining incidents that were reported.
+
+I plan to do a deep dive into everything and figure out what I can, as per the showcase plan memo (within reason/practicality; Shiny is proving to be more annoying than I could possibly have anticipated).
+
+Let's just look at the "top 5" in table form for now in a few categories. We'll look at companies, states, injured body parts, and injury sources.
+
+```{r include = FALSE, echo = FALSE, output = FALSE, warning = FALSE}
+top_fives <- 
+  list(
+  'OPERATOR_NAME',
+  'FIPS_STATE_CD',
+  'INJ_BODY_PART',
+  'INJURY_SOURCE') %>%
+  map(
+    ~ coal %>%
+      pull(.x) %>%
+      table() %>%
+      as.data.frame() %>%
+      arrange(desc(Freq)) %>%
+      head(5) %>%
+      set_names(
+        .x,
+        'Freq') %>%
+      kbl() %>%
+      kable_paper(
+        "hover",
+        full_width = FALSE))
+```
+
+```{r echo = FALSE}
+# I hate how WET this code is, but I'm on a deadline.
+# Don't judge me.
+top_fives[[1]]
+top_fives[[2]]
+top_fives[[3]]
+top_fives[[4]]
+```
+
+I plan on looking at MANY more things over the coming days, but that's what I could do on a quick-turnaround. Stay tuned!

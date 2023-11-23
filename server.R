@@ -14,6 +14,9 @@ skim_html <-
 coal <-
   read_rds('data/raw_coal_data.rds')
 
+analysis <- 
+  read_file('coal_analysis.html')
+
 server <- function(input, output) {
   
   # starterPanel data ----------------------------------------------------------
@@ -23,15 +26,11 @@ server <- function(input, output) {
   
   # resultsPanel data ----------------------------------------------------------
   
-  output$SecondPlot <- renderPlot({
-    datasets::ChickWeight %>%
-      filter(Diet %in% input$Diet) %>%
-      group_by(Diet) %>%
-      ggplot() +
-      geom_point(aes(x = Diet, y = weight))
-  })
+  output$analysis <-
+    renderText({ analysis})
   
   # explorerPanel data ---------------------------------------------------------
-  output$shaOutput <- renderText(digest(input$HashInputText, "sha256"))
+  output$shaOutput <- 
+    renderText(digest(input$HashInputText, "sha256"))
 }
 
