@@ -5,7 +5,7 @@ account: brh60
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10608284
-bundleId:
+bundleId: 7960152
 url: https://brh60.shinyapps.io/MiningCoal/
 version: 1
 asMultiple: FALSE
