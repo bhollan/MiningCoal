@@ -30,7 +30,12 @@ server <- function(input, output) {
     renderText({ analysis})
   
   # explorerPanel data ---------------------------------------------------------
-  output$shaOutput <- 
-    renderText(digest(input$HashInputText, "sha256"))
+  
+  rand_row <- eventReactive(input$random_row, {
+    return(coal %>%
+             sample_n(1) %>%
+             kable())})
+  
+  output$random_row <- 
+    renderText({ rand_row() })
 }
-
