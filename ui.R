@@ -4,13 +4,11 @@ library(tidyverse)
 library(shiny)
 library(datasets)
 library(digest)
-# library(shinythemes)
 library(shinycssloaders)
 
 # Define UI for application
 
 ui <- fluidPage(
-  # theme = shinytheme('slate'),
   
   titlePanel('Mine Safety and Health Administration (MSHA) public incident reports from 2000 - 2018'),
   
@@ -36,10 +34,51 @@ ui <- fluidPage(
     
     tabPanel(
       'What can you find? (explorer)',
+      withSpinner(
+        htmlOutput('random_row')),
       actionButton(
         'random_row',
         'Pick Random Row',
         icon = icon('dice-five')),
+      br(),
+      br(),
       withSpinner(
-        htmlOutput("random_row"))))
+        htmlOutput('random_from_topic')),
+      actionButton(
+        'random_topical',
+        'Pick Randomly from topic...',
+        icon = icon('dice-six')),
+      selectInput(
+        'topic_choice',
+        label = NULL,
+        choices = 1:10),
+      withSpinner(
+        htmlOutput('rand_from_pcx')),
+      actionButton(
+        'random_by_pc',
+        'Get random from PC#...',
+        icon = icon('dice-three')),
+      selectInput(
+        'pc_choice',
+        label = NULL,
+        choices = 1:16)
+    ))
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
