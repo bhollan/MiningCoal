@@ -1,7 +1,37 @@
+---
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+---
+
 ```{r include = FALSE, echo = FALSE, output = FALSE, warning = FALSE}
 library(tidyverse)
+library(kableExtra)
 library(skimr)
 ```
+
+\
+
+\
+
+WELCOME!
+
+\
+
+\
+
+For my work at MDI, we have this huge dataset of 220k coal mining incidents that were reported.
+
+We want to do a deep dive into everything and figure out what we can. Shiny is a huge asset to this process, but so are you! Let's look at what we've got, what I found, and then let you explore on your own!
+
+\
+
+First, let's take a quick tour of the raw dataset using the `skimr` package. Then, follow me over to the `What I found` page with the results of my analysis on it.
+
+\
+
+\
 
 ```{r echo = FALSE, output = TRUE}
 

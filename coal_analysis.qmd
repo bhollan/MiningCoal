@@ -1,3 +1,10 @@
+---
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+---
+
 ```{r include = FALSE, echo = FALSE, output = FALSE, warning = FALSE}
 library(skimr)
 library(kableExtra)
@@ -5,33 +12,52 @@ library(tidyverse)
 library(tidycensus)
 ```
 
-```{r echo = FALSE, output = TRUE}
+```{r include = FALSE, echo = FALSE, output = TRUE}
 
 coal <-
   read_rds('data/raw_coal_data.rds')
 
-# skim(coal)
-
 fips <-
   tidycensus::fips_codes %>%
+  mutate(
+    state_code = 
+      state_code %>%
+      as.double()) %>%
   select(
     state,
     state_code,
     state_name) %>%
-  summarise(.by = state)
+  summarise(
+    .by = 
+      c(state_code, 
+        state_name,
+        state))
+
+coal <- coal %>%
+  left_join(
+    fips, 
+    by = join_by(FIPS_STATE_CD == state_code))
 ```
 
-So we've got this huge dataset of 220k coal mining incidents that were reported.
+\
 
-I plan to do a deep dive into everything and figure out what I can, as per the showcase plan memo (within reason/practicality; Shiny is proving to be more annoying than I could possibly have anticipated).
+\
 
-Let's just look at the "top 5" in table form for now in a few categories. We'll look at companies, states, injured body parts, and injury sources.
+\
+
+Let's get mining!
+
+(Fair warning though: the analysis here will be brief in lieu of a public-facing application of the models' results)
+
+\
+
+Let's just look at the "top 15" in table form for now in a few categories. We'll look at companies, states, injured body parts, and injury sources.
 
 ```{r include = FALSE, echo = FALSE, output = FALSE, warning = FALSE}
 top_fives <- 
   list(
   'OPERATOR_NAME',
-  'FIPS_STATE_CD',
+  'state',
   'INJ_BODY_PART',
   'INJURY_SOURCE') %>%
   map(
@@ -40,7 +66,7 @@ top_fives <-
       table() %>%
       as.data.frame() %>%
       arrange(desc(Freq)) %>%
-      head(5) %>%
+      head(15) %>%
       set_names(
         .x,
         'Freq') %>%
@@ -59,4 +85,218 @@ top_fives[[3]]
 top_fives[[4]]
 ```
 
-I plan on looking at MANY more things over the coming days, but that's what I could do on a quick-turnaround. Stay tuned!
+Let's do the annoying part, then look into exploring all the many stories from the narratives.
+
+We'll do LDA first, then PCA.
+
+## Latent Dirichlet Allocation
+
+For LDA, I used the `tidylda` package written by an acquaintance and R-Gov presenter [Tommy Jones](https://www.jonesingfordata.com/). This provides hooks to extract useful calculations that are tidyverse-friendly.
+
+```{r eval=FALSE, include=TRUE}
+# raw coal dataset from MSHA
+docs <- read_rds('data/raw_coal_data.rds')
+
+# LDA modeling ---------------------------------------------------------
+
+# tokenize using tidytext's unnest_tokens
+tidy_docs <- docs %>%
+  mutate(ACC_ID = as.character(ACC_ID)) %>%
+  select(ACC_ID, NARRATIVE) %>%
+  unnest_tokens(
+    output = word,
+    input = NARRATIVE,
+    stopwords = stop_words$word,
+    token = "ngrams",
+    n_min = 1, n = 2) %>%
+  count(ACC_ID, word) %>%
+  filter(n>1) 
+# Filtering for words/bigrams per document, rather than per corpus
+
+
+# filter words that are just numbers
+tidy_docs <- tidy_docs %>%
+  filter(! stringr::str_detect(tidy_docs$word, "^[0-9]+$"))
+
+# append observation level data
+colnames(tidy_docs)[1:2] <- c("document", "term")
+
+# turn a tidy tbl into a sparse dgCMatrix
+# tidylda has support for several document term matrix formats
+d <- tidy_docs %>%
+  cast_sparse(document, term, n)
+
+set.seed(123)
+
+lda_model <- 
+  tidylda(
+    data = d,
+    k = 10,
+    iterations = 200,
+    burnin = 175,
+    alpha = 0.1, 
+    eta = 0.05, 
+    optimize_alpha = FALSE, 
+    calc_likelihood = TRUE,
+    calc_r2 = TRUE,
+    return_data = FALSE)
+
+# save model for quick-reading later
+# write_rds(lda_model, "data/lda_model.RDS")
+
+# TODO:
+# Somehow from the trained model it seems like only training on
+# 154949 documents instead of the given 231866 documents
+
+# augment LDA matrix(es) with document IDs (join table: doc, term, topic)
+join_table <- 
+  augment(
+    lda_model, 
+    data = tidy_docs)
+```
+
+```{r eval=TRUE, include=FALSE}
+lda_model <- read_rds('data/lda_model.RDS')
+join_table <- read_rds('data/join_table.RDS')
+```
+
+The above code takes many minutes to run, so I've just loaded the pre-trained `lda_model`. Let's take a look at the included `summary` object.
+
+```{r}
+lda_model$summary
+```
+
+So here we can see the 10 topics the model found. The two numerical values, `prevelance` and `coherance` are simple frequency of the topic and a computed estimation of the human-comprehensibility of the topic respectively. We can also see the R\*\*2 value of `0.1136`, so the model did converge, but it's performance is less than stellar (which I'm sure could be tuned and optimized, given more time). But again, we're not here for high performance, we're here for practical application (our model may be "wrong", but at least it's "useful"!).
+
+One other thing to mention here, one major product from the processing above is our `join_table` that has three useful columns: `document`, `term`, and `topic`. We can now use this to filter, join, and/or select any of those we want to jump back and forth between them (more on that in the "Explore" tab).
+
+## PCA
+
+For Principle Components Analysis, we have to 'massage' the data a bit. We can only use numerical columns, and only non-zero ones at that. Plus, there were some "ID number" columns that made sense to keep and some that made sense to drop. Also, there were a peculiarly and inconveniently non-overlapping set of missing values in some columns that ended up needing to be dropped. About 4 columns, each with about 20% missing, but their missingness conglomerated to cover about 95% of the rows taken as a whole. So I only kept one of those rows since it had a lot of variation and not a lot of missing values.
+
+As a shout-out to Madde Pickens, doing my tutorial as she suggested was actually super-helpful for this process. It would have taken me much, much longer to isolate the 'missingness trouble' without having just written a tutorial on 3 packages to assist with that. Thanks!
+
+```{r}
+# docs <- read_rds('data/raw_coal_data.rds')
+docs <- coal
+
+drop_cols <-
+  c('ACC_ID',
+    'DOCUMENT_NO',
+    'CLOSED_DOC_NO',
+#    'TOT_EXPER',    I kept this column (good variation, but 40k missing)
+    'MINE_EXPER',
+    'JOB_EXPER',
+    'SCHEDULE_CHARGE',
+    'DAYS_RESTRICT',
+    'DAYS_LOST')
+
+
+pca_docs <-
+  docs %>%
+  select(
+    where(is.numeric),
+    -all_of(drop_cols)) %>%
+  drop_na() %>%
+  select_if(colSums(.) != 0)
+
+
+pca_model <-
+  pca_docs %>%
+  prcomp(scale = TRUE)
+
+joined_pca <-
+  pca_model %>%
+  augment(pca_docs)
+
+```
+
+So let's just do some sanity checks to see if our PCA gave any variation, or if everything is still lumped on top of itself.
+
+Let's plot the points along the first two principle components (PCs), then see if the rotation matrix is sensible, and we'll wrap up with covering the variance explained visually.
+
+```{r}
+# plot data on PCs
+
+joined_pca %>%
+  ggplot(
+    aes(
+      .fittedPC1,
+      .fittedPC2)) +
+  geom_point(size = 1.0) +
+  labs(title = 'Coal incidents along PCA axes')
+```
+
+Okay, that has a big lump in one spot, but has some striations that we can pretend spread the data out well enough. But just for giggles, let's check another pair of PCs just to see what happens.
+
+```{r}
+# plot data on PCs
+
+joined_pca %>%
+  ggplot(
+    aes(
+      .fittedPC3,
+      .fittedPC2)) +
+  geom_point(size = 1.0) +
+  labs(title = 'Coal incidents along PCA axes')
+```
+
+Well now, doesn't that look more "evenly spread"?
+
+Now, let's look at the rotation matrix.
+
+```{r}
+
+# plot rotation matrix
+
+pca_model %>%
+  tidy(matrix = "rotation") %>%
+  pivot_wider(
+    names_from = "PC",
+    names_prefix = "PC",
+    values_from = "value") %>%
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(
+    xend = 0,
+    yend = 0,
+    arrow = arrow(
+      angle = 20, 
+      ends = "first", 
+      type = "closed", 
+      length = grid::unit(8, "pt"))) +
+  geom_text(
+    aes(label = column),
+    hjust = 1,
+    nudge_x = -0.02, 
+    check_overlap = TRUE,
+    color = "#904C2F") +
+  xlim(-0.5, 0.05) +
+  ylim(-.3, 0.6) +
+  coord_fixed() +         # fix aspect ratio to 1:1
+  labs(title = 'PCA rotation matrix vectors')
+
+```
+
+Okay, so again, doesn't look spectacular, but at least it spreads out a little bit and has more than 2 directions visible to our human eyes.
+
+Lastly, let's just see how laughably low our variance explained is.
+
+```{r}
+pca_model %>%
+  tidy(matrix = 'eigenvalues') %>%
+  ggplot(
+    aes(
+      PC, 
+      percent)) +
+  geom_col(
+    fill = 'darkblue',
+    alpha = 0.8) +
+  scale_x_continuous(breaks = 1:25) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    expand = expansion(mult = c(0, 0.01))) +
+  labs(title = 'Percent of variance explained per principle component')
+
+```
+
+As much as I'd love the total of the first 2 PCs to be closer to 50%, I'll take \~25% for the time being. At least the first half dozen get us above 50%, so that's not the end of the world.
