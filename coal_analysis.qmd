@@ -162,8 +162,8 @@ join_table <-
 ```
 
 ```{r eval=TRUE, include=FALSE}
-lda_model <- read_rds('data/lda_model.RDS')
-join_table <- read_rds('data/join_table.RDS')
+lda_model <- read_rds('data/lda_model.rds')
+join_table <- read_rds('data/join_table.rds')
 ```
 
 The above code takes many minutes to run, so I've just loaded the pre-trained `lda_model`. Let's take a look at the included `summary` object.
