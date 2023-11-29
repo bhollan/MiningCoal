@@ -1,7 +1,7 @@
 # libraries and setup --------------------------------------------------------
 library(tidyverse)
 library(shiny)
-library(shinythemes)
+# library(shinythemes)
 library(kableExtra)
 library(LDAvis)
 
@@ -33,6 +33,7 @@ server <- function(input, output) {
   get_rand_row <- eventReactive(input$random_row, {
     return(coal %>%
              sample_n(1) %>%
+             select(NARRATIVE) %>%
              kable())})
   
   output$random_row <- 

@@ -4,13 +4,13 @@ library(tidyverse)
 library(shiny)
 library(datasets)
 library(digest)
-library(shinythemes)
+# library(shinythemes)
 library(shinycssloaders)
 
 # Define UI for application
 
 ui <- fluidPage(
-  theme = shinytheme('slate'),
+  # theme = shinytheme('slate'),
   
   titlePanel('Mine Safety and Health Administration (MSHA) public incident reports from 2000 - 2018'),
   

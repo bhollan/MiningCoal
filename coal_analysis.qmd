@@ -10,6 +10,7 @@ library(skimr)
 library(kableExtra)
 library(tidyverse)
 library(tidycensus)
+library(broom)
 ```
 
 ```{r include = FALSE, echo = FALSE, output = TRUE}
@@ -73,7 +74,10 @@ top_fives <-
       kbl() %>%
       kable_paper(
         "hover",
-        full_width = FALSE))
+        full_width = FALSE) %>%
+      column_spec(
+        2,
+        width = '4cm'))
 ```
 
 ```{r echo = FALSE}
@@ -83,6 +87,8 @@ top_fives[[1]]
 top_fives[[2]]
 top_fives[[3]]
 top_fives[[4]]
+
+
 ```
 
 Let's do the annoying part, then look into exploring all the many stories from the narratives.
