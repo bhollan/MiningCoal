@@ -1,11 +1,9 @@
 # libraries and setup --------------------------------------------------------
 library(tidyverse)
 library(shiny)
-library(datasets)
-library(digest)
 library(shinythemes)
-library(skimr)
 library(kableExtra)
+library(LDAvis)
 
 # Define server logic required
 
