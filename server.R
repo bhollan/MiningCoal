@@ -1,8 +1,11 @@
 # libraries and setup --------------------------------------------------------
 
 library(tidyverse)
+library(tidylda)
+library(tidytext)
 library(shiny)
 library(kableExtra)
+
 
 # Define server logic required
 
@@ -15,6 +18,11 @@ coal <-
 analysis <- 
   read_file('coal_analysis.html')
 
+lda_model <-
+  read_rds('data/lda_model.rds')
+
+treemaps <- list()
+
 join_table <-
   read_rds('data/join_table.rds')
 
@@ -25,8 +33,6 @@ pca_id <-
   joined_pca %>%
   sample_n(1) %>%
   select(.rownames)
-
-x <- 4
 
 server <- function(input, output) {
   
@@ -104,6 +110,82 @@ server <- function(input, output) {
         ylab("Token (word)") +
         scale_y_reordered() 
     })
+  
+  # TreeMap plotting --------------------------------------
+  
+  ###### Incidents per state-------------------------------
+  incidents_per_state <- 
+    coal %>% 
+    summarise(
+      num_incidents = n(),
+      .by = FIPS_STATE_CD) %>%
+    left_join(
+      fips_codes,
+      by = join_by(FIPS_STATE_CD == state_code)) %>%
+    select(num_incidents, state) %>%
+    unique()
+  
+  treemaps$inc_per_state <- 
+      ggplot(incidents_per_state,
+             aes(
+               area = num_incidents, 
+               label = state)) + 
+        geom_treemap() + 
+        geom_treemap_text(color = 'white') + 
+        theme(text = element_text(size = 22)) +
+        labs(
+          title = "Incidents per US state/territory")
+  ###### Mines per state----------------------------------
+  mines_per_state <- 
+    coal %>%
+    select(c(
+      FIPS_STATE_CD,
+      MINE_ID)) %>%
+    unique() %>%
+    summarise(
+      num_mines = n(),
+      .by = FIPS_STATE_CD) %>%
+    left_join(
+      fips_codes,
+      by = join_by(FIPS_STATE_CD == state_code)) %>%
+    select(num_mines, state) %>%
+    unique()
+  
+  treemaps$mines_per_state <- 
+      ggplot(mines_per_state,
+             aes(
+               area = num_mines, 
+               label = state)) + 
+        geom_treemap() + 
+        geom_treemap_text(color = 'white') + 
+        theme(text = element_text(size = 22)) +
+        labs(
+          title = "Number of mines per US state/territory")
+  ###### Incidents per mine------------------------------
+  incidents_per_mine_by_state <-
+    left_join(
+      incidents_per_state,
+      mines_per_state,
+      by = 'state') %>%
+    mutate(
+      incidents_per_mine = num_incidents / num_mines) %>%
+    select(state, incidents_per_mine)
+  
+  treemaps$inc_per_mine_state <- 
+      ggplot(incidents_per_mine_by_state,
+             aes(
+               area = incidents_per_mine, 
+               label = state)) + 
+        geom_treemap() + 
+        geom_treemap_text(color = 'white') + 
+        theme(text = element_text(size = 22)) +
+        labs(
+          title = "Incidents per mine by US state/territory")
+  
+  # treemap switching -------------------------------------
+  
+  output$state_plot <- renderPlot({treemaps[[input$state_plot_pick]]})
+  
   ###### random-by-prcomp ---------------------------------
   get_rand_from_pcx <- 
     eventReactive(input$random_by_pc, {

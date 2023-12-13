@@ -10,7 +10,8 @@ library(shinycssloaders)
 
 ui <- fluidPage(
   
-  titlePanel('Mine Safety and Health Administration (MSHA) public incident reports from 2000 - 2018'),
+  titlePanel('Mine Safety and Health Administration 
+             (MSHA) public incident reports from 2000 - 2018'),
   
   h4('Brian Holland'),
   
@@ -21,6 +22,7 @@ ui <- fluidPage(
     tabPanel(
       'Start here (raw data)', 
       withSpinner(
+        type = 4,
         htmlOutput('skimmer'))),
     
     # results panel ------------------------------------------------------------
@@ -28,6 +30,7 @@ ui <- fluidPage(
     tabPanel(
       'What I found (results)',
       withSpinner(
+        type = 4,
         htmlOutput('analysis'))),
     
     # explore panel ------------------------------------------------------------
@@ -53,7 +56,9 @@ ui <- fluidPage(
         'topic_choice',
         label = NULL,
         choices = 1:12),
-      plotOutput("topic_plot"),
+      withSpinner(
+        type = 4,
+        plotOutput("topic_plot")),
       # random-by-prcomp --------------------------------------------------
       htmlOutput('rand_from_pcx'),
       actionButton(
@@ -63,7 +68,18 @@ ui <- fluidPage(
       selectInput(
         'pc_choice',
         label = NULL,
-        choices = 1:16)
+        choices = 1:16),
+      # state-tree-map plots ----------------------------------------------
+      selectInput(
+        'state_plot_pick',
+        label = 'TreeMap Selector',
+        choices = list(
+          `Incidents per state` = 'inc_per_state',
+          `Mines per state` = 'mines_per_state',
+          `Incidents per mine` = 'inc_per_mine_state')),
+      withSpinner(
+        type = 4,
+        plotOutput('state_plot')),
     ))
 )
 

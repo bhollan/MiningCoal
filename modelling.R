@@ -10,6 +10,7 @@ library(broom)
 # raw coal dataset from MSHA
 docs <- read_rds('data/raw_coal_data.rds')
 
+
 # LDA modeling ---------------------------------------------------------
 
 # tokenize using tidytext's unnest_tokens
@@ -44,7 +45,7 @@ set.seed(123)
 lda_model <- 
   tidylda(
     data = d,
-    k = 10,
+    k = 12,
     iterations = 200,
     burnin = 175,
     alpha = 0.1, 
@@ -61,16 +62,6 @@ lda_model <-
 # Somehow from the trained model it seems like only training on
 # 154949 documents instead of the given 231866 documents
 
-# augment LDA matrix(es) with document IDs (join table: doc, term, topic)
-join_table <- 
-  augment(
-    lda_model, 
-    data = tidy_docs)
-
-# save table for quick-reading later
-# write_rds(join_table, "data/join_table.RDS")
-
-
 # PCA modeling -------------------------------------------------------------
 
 
@@ -81,6 +72,7 @@ join_table <-
 # These are either unwanted ID columns, or had too many coincidental missing
 drop_cols <-
   c('ACC_ID',
+    'MINE_ID',
     'DOCUMENT_NO',
     'CLOSED_DOC_NO',
     #    'TOT_EXPER',    I kept this column (good variation, but 40k missing)
@@ -118,10 +110,7 @@ joined_pca %>%
   geom_point(size = 1.0)
 
 
-# pca_model %>%
-# tidy(matrix = 'rotation')
-
-
+# plot rotation matrix
 arrow_style <-
   arrow(
     angle = 20, 
@@ -129,7 +118,6 @@ arrow_style <-
     type = "closed", 
     length = grid::unit(8, "pt"))
 
-# plot rotation matrix
 pca_model %>%
   tidy(matrix = "rotation") %>%
   pivot_wider(
@@ -147,8 +135,8 @@ pca_model %>%
     nudge_x = -0.02, 
     check_overlap = TRUE,
     color = "#904C2F") +
-  xlim(-0.5, 0.05) +
-  ylim(-.3, 0.6) +
+  xlim(-0.2, 0.01) +
+  ylim(-0.15, 0.25) +
   coord_fixed()         # fix aspect ratio to 1:1
 
 
