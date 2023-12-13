@@ -45,7 +45,7 @@ set.seed(123)
 lda_model <- 
   tidylda(
     data = d,
-    k = 12,
+    k = 10,
     iterations = 200,
     burnin = 175,
     alpha = 0.1, 

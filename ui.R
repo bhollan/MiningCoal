@@ -71,7 +71,7 @@ ui <- fluidPage(
       selectInput(
         'topic_choice',
         label = NULL,
-        choices = 1:12),
+        choices = 1:10),
       withSpinner(
         type = 4,
         plotOutput("topic_plot")),
