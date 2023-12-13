@@ -34,16 +34,17 @@ ui <- fluidPage(
     
     tabPanel(
       'What can you find? (explorer)',
-      withSpinner(
-        htmlOutput('random_row')),
+      
+      # random narrative button --------------------------------------------
+      htmlOutput('random_row'),
       actionButton(
         'random_row',
         'Pick Random Row',
         icon = icon('dice-five')),
       br(),
       br(),
-      withSpinner(
-        htmlOutput('random_from_topic')),
+      # random-from-topic -------------------------------------------------
+      htmlOutput('random_from_topic'),
       actionButton(
         'random_topical',
         'Pick Randomly from topic...',
@@ -51,9 +52,10 @@ ui <- fluidPage(
       selectInput(
         'topic_choice',
         label = NULL,
-        choices = 1:10),
-      withSpinner(
-        htmlOutput('rand_from_pcx')),
+        choices = 1:12),
+      plotOutput("topic_plot"),
+      # random-by-prcomp --------------------------------------------------
+      htmlOutput('rand_from_pcx'),
       actionButton(
         'random_by_pc',
         'Get random from PC#...',
