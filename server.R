@@ -5,9 +5,14 @@ library(tidylda)
 library(tidytext)
 library(shiny)
 library(kableExtra)
-
-
-# Define server logic required
+library(treemapify)
+library(tigris)
+data('fips_codes')
+fips_codes <-
+  fips_codes %>%
+  mutate(
+    state_code = state_code %>% 
+      as.double())
 
 skim_html <-
   read_file('skim_workaround.html')
@@ -34,7 +39,9 @@ pca_id <-
   sample_n(1) %>%
   select(.rownames)
 
-server <- function(input, output) {
+# SERVER LOGIC -----------------------------------------------------------------
+
+server <- function(input, output, session) {
   
   # starterPanel data ----------------------------------------------------------
   
@@ -60,6 +67,28 @@ server <- function(input, output) {
   
   output$random_row <- 
     renderText({ get_rand_row() })
+  
+  # SCATTER plotting -----------------------------------------------------------
+  # These took literally so long to render that it would freeze Shiny
+  # I don't like having them as images, but it's where I'm at
+  
+  scatterplots <- list(
+    'days_vs_tot' = './figures/days_lost_vs_total_exp.png',
+    'days_vs_mining' = './figures/days_lost_vs_mining_exp.png',
+    'days_vs_job' = './figures/days_lost_vs_job_exp.png')
+  
+  output$days_lost_plot <- 
+    renderImage({
+      list(src = 
+             scatterplots[[input$days_plot_pick]] %>%
+             normalizePath(),
+           width = '100%',
+           height = '100%',
+           alt = 'days lots vs experience')
+    }, 
+    deleteFile = FALSE)
+  
+  
   ###### random-from-topic / topic_plot--------------------
   get_rand_from_topic <- 
     eventReactive(input$random_topical, {
@@ -126,15 +155,15 @@ server <- function(input, output) {
     unique()
   
   treemaps$inc_per_state <- 
-      ggplot(incidents_per_state,
-             aes(
-               area = num_incidents, 
-               label = state)) + 
-        geom_treemap() + 
-        geom_treemap_text(color = 'white') + 
-        theme(text = element_text(size = 22)) +
-        labs(
-          title = "Incidents per US state/territory")
+    ggplot(incidents_per_state,
+           aes(
+             area = num_incidents, 
+             label = state)) + 
+    geom_treemap() + 
+    geom_treemap_text(color = 'white') + 
+    theme(text = element_text(size = 22)) +
+    labs(
+      title = "Incidents per US state/territory")
   ###### Mines per state----------------------------------
   mines_per_state <- 
     coal %>%
@@ -152,15 +181,15 @@ server <- function(input, output) {
     unique()
   
   treemaps$mines_per_state <- 
-      ggplot(mines_per_state,
-             aes(
-               area = num_mines, 
-               label = state)) + 
-        geom_treemap() + 
-        geom_treemap_text(color = 'white') + 
-        theme(text = element_text(size = 22)) +
-        labs(
-          title = "Number of mines per US state/territory")
+    ggplot(mines_per_state,
+           aes(
+             area = num_mines, 
+             label = state)) + 
+    geom_treemap() + 
+    geom_treemap_text(color = 'white') + 
+    theme(text = element_text(size = 22)) +
+    labs(
+      title = "Number of mines per US state/territory")
   ###### Incidents per mine------------------------------
   incidents_per_mine_by_state <-
     left_join(
@@ -172,15 +201,15 @@ server <- function(input, output) {
     select(state, incidents_per_mine)
   
   treemaps$inc_per_mine_state <- 
-      ggplot(incidents_per_mine_by_state,
-             aes(
-               area = incidents_per_mine, 
-               label = state)) + 
-        geom_treemap() + 
-        geom_treemap_text(color = 'white') + 
-        theme(text = element_text(size = 22)) +
-        labs(
-          title = "Incidents per mine by US state/territory")
+    ggplot(incidents_per_mine_by_state,
+           aes(
+             area = incidents_per_mine, 
+             label = state)) + 
+    geom_treemap() + 
+    geom_treemap_text(color = 'white') + 
+    theme(text = element_text(size = 22)) +
+    labs(
+      title = "Incidents per mine by US state/territory")
   
   # treemap switching -------------------------------------
   

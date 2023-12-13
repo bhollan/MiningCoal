@@ -46,6 +46,22 @@ ui <- fluidPage(
         icon = icon('dice-five')),
       br(),
       br(),
+      
+      # days-lost-vs-experience plots ------------------------------------------
+      selectInput(
+        'days_plot_pick',
+        label = 'Days Lost vs...',
+        choices = list(
+          `Total experience` = 'days_vs_tot',
+          `Mining experience` = 'days_vs_mining',
+          `Job experience (non-mining)` = 'days_vs_job')),
+      withSpinner(
+        type = 4,
+        imageOutput(
+            'days_lost_plot',
+            height = '800px',
+            width = '800px')),
+      
       # random-from-topic -------------------------------------------------
       htmlOutput('random_from_topic'),
       actionButton(
@@ -59,6 +75,7 @@ ui <- fluidPage(
       withSpinner(
         type = 4,
         plotOutput("topic_plot")),
+      
       # random-by-prcomp --------------------------------------------------
       htmlOutput('rand_from_pcx'),
       actionButton(
@@ -69,6 +86,7 @@ ui <- fluidPage(
         'pc_choice',
         label = NULL,
         choices = 1:16),
+      
       # state-tree-map plots ----------------------------------------------
       selectInput(
         'state_plot_pick',
